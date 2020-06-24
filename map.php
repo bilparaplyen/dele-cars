@@ -25,6 +25,17 @@
         </style>
         <script type="text/javascript">
         data=<?= $json_str ?>;
+        Object.defineProperty(String.prototype, 'hashCode', {
+            value: function() {
+                var hash = 0, i, chr;
+                for (i = 0; i < this.length; i++) {
+                chr   = this.charCodeAt(i);
+                hash  = ((hash << 5) - hash) + chr;
+                hash |= 0; // Convert to 32bit integer
+                }
+                return hash;
+            }
+        });
         </script>
     </head>
     <body>
@@ -43,6 +54,18 @@
                 zoomOffset: -1,
                 accessToken: 'pk.eyJ1Ijoiam9uYXNmaCIsImEiOiJja2J0dnNlejgwZGQyMnNsaWc3aWo0MHIxIn0.x-q62SMPb4WqznKVUI2taw'
             }).addTo(mymap);
+            var features = {};
+            for (let index = 0; index < data.cars.length; index++) {
+                const car = data.cars[index];
+                const key = JSON.stringify(car.location.geojson).hashCode();
+                if( key in features) {
+                    continue;
+                }
+                features[key] = true;
+                var feature = L.geoJSON(car.location.geojson);
+                feature.addTo(mymap);
+            }
+
         </script>
     </body>
 </html>
