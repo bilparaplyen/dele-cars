@@ -63,12 +63,17 @@
                 const key = JSON.stringify(car.location.geojson).hashCode();
                 var feature = L.geoJSON(car.location.geojson, {style:style});
                 var point = feature.getBounds().getCenter();
-                var marker = L.marker(point).addTo(mymap);
-                if( key in features) {
-                    continue;
+                if(!(key in features)) {
+                    features[key] = true;
+                    feature.addTo(mymap);
                 }
-                features[key] = true;
-                feature.addTo(mymap);
+                var marker = L.marker(point).addTo(mymap);
+                var popup = "<div>";
+                popup = "<h3>" + car.model + "</h3>";
+                popup += '<img style="max-width:100%"';
+                popup += 'src="https://app.dele.no' + car.iconUrl + '" />';
+                popup += "</div>";
+                marker.bindPopup(popup);
             }
 
         </script>
