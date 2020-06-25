@@ -55,14 +55,19 @@
                 accessToken: 'pk.eyJ1Ijoiam9uYXNmaCIsImEiOiJja2J0dnNlejgwZGQyMnNsaWc3aWo0MHIxIn0.x-q62SMPb4WqznKVUI2taw'
             }).addTo(mymap);
             var features = {};
+            var style = {
+                "weight": 7,
+            };
             for (let index = 0; index < data.cars.length; index++) {
                 const car = data.cars[index];
                 const key = JSON.stringify(car.location.geojson).hashCode();
+                var feature = L.geoJSON(car.location.geojson, {style:style});
+                var point = feature.getBounds().getCenter();
+                var marker = L.marker(point).addTo(mymap);
                 if( key in features) {
                     continue;
                 }
                 features[key] = true;
-                var feature = L.geoJSON(car.location.geojson);
                 feature.addTo(mymap);
             }
 
