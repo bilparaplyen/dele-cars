@@ -16,8 +16,11 @@ function carmap_func( $atts ) {
     'url' => "https://app.dele.no/api/search",
     'token' => '',
   ), $atts );
-  $start = date('Y-m-d\TH:00:00', time()+3600*3);
-  $end = date('Y-m-d\TH:00:00',  time()+3600*4);
+  $ts = new DateTimeZone('Europe/Oslo');
+  $start = new DateTime("now", $ts);
+  $start = $start->format('Y-m-d\TH:i:s');
+  $end = new DateTime("+3 hours", $ts);
+  $end = $end->format('Y-m-d\TH:i:s');
   $fn="{$a[url]}?start=$start&"
     . "end=$end&location=%7B%22type%22%3A%22Point%22%2C%22"
     . 'coordinates%22%3A%5B5.32055452%2C60.39078164%5D%7D&'
