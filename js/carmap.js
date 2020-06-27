@@ -21,23 +21,27 @@ function dele_createMap(token) {
     }).addTo(mymap);
     var features = {};
     var style = {
-        "weight": 7,
+        weight: 10,
+        fillColor: "#247BA0",
+        color: "#247BA0",
+        radius: 1,
     };
+    // Draw locations:
     for (let index = 0; index < dele_data.cars.length; index++) {
         const car = dele_data.cars[index];
         const key = dele_hashCode(JSON.stringify(car.location.geojson));
-        var feature = L.geoJSON(car.location.geojson, {style:style});
-        var point = feature.getBounds().getCenter();
-        if(!(key in features)) {
+        var feature = L.geoJSON(car.location.geojson, { style: style });
+        if (car.location.geojson.type == 'Point') {
+            feature = L.geoJSON(car.location.geojson, {
+                pointToLayer: function (feature, latlng) {
+                    return L.circleMarker(latlng, style);
+                }
+            });
+        }
+
+        if (!(key in features)) {
             features[key] = true;
             feature.addTo(mymap);
         }
-        var marker = L.marker(point).addTo(mymap);
-        var popup = "<div>";
-        popup = "<h3>" + car.model + "</h3>";
-        popup += '<img style="max-width:100%"';
-        popup += 'src="https://app.dele.no' + car.iconUrl + '" />';
-        popup += "</div>";
-        marker.bindPopup(popup);
     }
 }
