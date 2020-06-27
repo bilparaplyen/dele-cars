@@ -38,10 +38,31 @@ function dele_createMap(token) {
                 }
             });
         }
-
         if (!(key in features)) {
-            features[key] = true;
+            features[key] = new L.MarkerClusterGroup();
             feature.addTo(mymap);
         }
     }
+
+    // Draw cars
+    for (let index = 0; index < dele_data.cars.length; index++) {
+        console.log(features[index]);
+        const car = dele_data.cars[index];
+        const key = dele_hashCode(JSON.stringify(car.location.geojson));
+        var feature = L.geoJSON(car.location.geojson, { style: style });
+        var point = feature.getBounds().getCenter();
+        var marker = L.marker(point)
+        var popup = "<div>";
+        popup = "<h3>" + car.model + "</h3>";
+        popup += '<img style="max-width:100%"';
+        popup += 'src="https://app.dele.no' + car.iconUrl + '" />';
+        popup += "</div>";
+        marker.bindPopup(popup);
+        features[key].addLayer(marker);
+    }
+    var all_markers = new L.MarkerClusterGroup();
+    for (var key of Object.keys(features)) {
+        all_markers.addLayer(features[key]);
+    }
+    mymap.addLayer(all_markers);
 }

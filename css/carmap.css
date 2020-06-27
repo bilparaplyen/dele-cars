@@ -1,5 +1,6 @@
 #mapid {
-  height: 580px;
+  height: 780px;
+  max-height: 100vw;
   width: 100vw;
-  max-width: 850px;
+  max-width: 1280px;
 }
