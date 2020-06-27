@@ -26,6 +26,7 @@ function dele_createMap(token) {
         accessToken: token,
     }).addTo(mymap);
     var features = {};
+    var icons={};
     var style = {
         weight: 10,
         fillColor: "#247BA0",
@@ -57,7 +58,11 @@ function dele_createMap(token) {
         const key = dele_hashCode(JSON.stringify(car.location.geojson));
         var feature = L.geoJSON(car.location.geojson, { style: style });
         var point = feature.getBounds().getCenter();
-        var marker = L.marker(point)
+        var icon = L.icon({
+            iconUrl: 'https://app.dele.no' + car.iconUrl,
+            iconSize: [60, 25],
+        });
+        var marker = L.marker(point, {icon: icon})
         var popup = "<div>";
         popup = "<h3>" + car.model + "</h3>";
         popup += '<img style="max-width:100%"';
