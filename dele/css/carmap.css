@@ -5,11 +5,14 @@
   max-width: 1280px;
 }
 .entry-content .leaflet-popup-content h3{
-  margin: 2rem auto 1rem auto;
+  margin: 2rem auto .6rem auto;
 }
 .leaflet-popup-content ul{
   margin: 1rem;
 }
-.leaflet-popup-content li{
+.leaflet-popup-content li, .leaflet-popup-content div{
   font-size: 1.6rem;
+}
+.leaflet-popup-content div {
+  margin: 0 1rem 1rem 1rem;
 }

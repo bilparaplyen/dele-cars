@@ -53,7 +53,6 @@ function dele_createMap(token) {
 
     // Draw cars
     for (let index = 0; index < dele_data.cars.length; index++) {
-        console.log(features[index]);
         const car = dele_data.cars[index];
         const key = dele_hashCode(JSON.stringify(car.location.geojson));
         var feature = L.geoJSON(car.location.geojson, { style: style });
@@ -66,6 +65,7 @@ function dele_createMap(token) {
         var popup = L.popup({maxWidth: 450})
         var p_content = "<div>";
         p_content = "<h3>" + car.model + "</h3>";
+        p_content += "<div><em>" + car.location.name + "</em></div>";
         p_content += '<img style="max-width:100%"';
         p_content += 'src="https://app.dele.no' + car.iconUrl + '" />';
         p_content += "<ul>";
