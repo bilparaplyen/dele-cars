@@ -10,7 +10,13 @@ function dele_hashCode(str) {
 
 //Create a map with all the cars
 function dele_createMap(token) {
-    var mymap = L.map('mapid').setView([60.39078164, 5.32055452], 13);
+    var mymap = L.map('mapid', {
+        dragging: !L.Browser.mobile,
+        tap: !L.Browser.mobile,
+        zoom: 11,
+        center: [60.39078164, 5.32055452],
+    });
+
     L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}', {
         attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
         maxZoom: 18,
