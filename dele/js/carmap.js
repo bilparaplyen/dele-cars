@@ -60,14 +60,35 @@ function dele_createMap(token) {
         var point = feature.getBounds().getCenter();
         var icon = L.icon({
             iconUrl: 'https://app.dele.no' + car.iconUrl,
-            iconSize: [60, 25],
+            iconSize: [60, null],
         });
         var marker = L.marker(point, {icon: icon})
-        var popup = "<div>";
-        popup = "<h3>" + car.model + "</h3>";
-        popup += '<img style="max-width:100%"';
-        popup += 'src="https://app.dele.no' + car.iconUrl + '" />';
-        popup += "</div>";
+        var popup = L.popup({maxWidth: 450})
+        var p_content = "<div>";
+        p_content = "<h3>" + car.model + "</h3>";
+        p_content += '<img style="max-width:100%"';
+        p_content += 'src="https://app.dele.no' + car.iconUrl + '" />';
+        p_content += "<ul>";
+        p_content += "<li> Pris pr time Kr "
+            + car.hourlyRate.toFixed(2).replace('.',',')
+            + "</li>";
+        p_content += "<li> Drivstoff: "
+            + car.carProperties.find(
+                obj => obj.carPropertyGroup == 'Drivstoff'
+            ).carPropertyName
+            + "</li>";
+        if (car.maxAvailability == 100) {
+            p_content += "<li><strong> Helt ledig neste tre timer</strong></li>"
+        }
+        else if (car.maxAvailability < 100 && car.maxAvailability > 0) {
+            p_content += "<li> Delvis ledig neste 3 timer</li>"
+        }
+        else {
+            p_content += "<li> Opptatt neste 3 timer</li>"
+        }
+        p_content += "</ul>";
+        p_content += "</div>";
+        popup.setContent(p_content);
         marker.bindPopup(popup);
         features[key].addLayer(marker);
     }
