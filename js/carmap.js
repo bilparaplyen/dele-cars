@@ -1,4 +1,4 @@
-function hashCode(str) {
+function dele_hashCode(str) {
     var hash = 0, i, chr;
     for (i = 0; i < str.length; i++) {
         chr = str.charCodeAt(i);
@@ -9,7 +9,7 @@ function hashCode(str) {
 }
 
 //Create a map with all the cars
-function createMap(token) {
+function dele_createMap(token) {
     var mymap = L.map('mapid').setView([60.39078164, 5.32055452], 13);
     L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}', {
         attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
@@ -23,9 +23,9 @@ function createMap(token) {
     var style = {
         "weight": 7,
     };
-    for (let index = 0; index < data.cars.length; index++) {
-        const car = data.cars[index];
-        const key = hashCode(JSON.stringify(car.location.geojson));
+    for (let index = 0; index < dele_data.cars.length; index++) {
+        const car = dele_data.cars[index];
+        const key = dele_hashCode(JSON.stringify(car.location.geojson));
         var feature = L.geoJSON(car.location.geojson, {style:style});
         var point = feature.getBounds().getCenter();
         if(!(key in features)) {

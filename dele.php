@@ -26,10 +26,10 @@ function carmap_func( $atts ) {
     $json_str="false";
   }
   $output = "<script type='text/javascript'>"
-    ."data=$json_str;"
+    ."dele_data=$json_str;"
     ."</script>"
     ."<div id='mapid'></div>"
-    ."<script type='text/javascript'>createMap('{$a[token]}')</script>";
+    ."<script type='text/javascript'>dele_createMap('{$a[token]}')</script>";
 
   if ($json == NULL) {
     $json_str="false";
