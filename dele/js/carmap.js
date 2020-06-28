@@ -10,7 +10,7 @@ function dele_hashCode(str) {
 
 //Create a map with all the cars
 function dele_createMap(token) {
-    var mymap = L.map('mapid', {
+    var map = L.map('mapid', {
         dragging: !L.Browser.mobile,
         tap: !L.Browser.mobile,
         zoom: 11,
@@ -19,13 +19,14 @@ function dele_createMap(token) {
 
     L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}', {
         attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
-        maxZoom: 18,
+        maxZoom: 20,
         id: 'mapbox/streets-v11',
         tileSize: 512,
         zoomOffset: -1,
         accessToken: token,
-    }).addTo(mymap);
+    }).addTo(map);
     var features = {};
+    var locations = L.layerGroup();
     var icons={};
     var style = {
         weight: 10,
@@ -47,9 +48,23 @@ function dele_createMap(token) {
         }
         if (!(key in features)) {
             features[key] = new L.MarkerClusterGroup();
-            feature.addTo(mymap);
+            locations.addLayer(feature);
         }
     }
+    // Only show locations when zoomed in:
+    map.on('zoomend', function () {
+        var zoomlevel = map.getZoom();
+        if (zoomlevel < 15) {
+            if (map.hasLayer(locations)) {
+                map.removeLayer(locations);
+            }
+        }
+        else if (zoomlevel >= 15) {
+            if (!map.hasLayer(locations)) {
+                map.addLayer(locations);
+            }
+        }
+    });
 
     // Draw cars
     for (let index = 0; index < dele_data.cars.length; index++) {
@@ -96,5 +111,5 @@ function dele_createMap(token) {
     for (var key of Object.keys(features)) {
         all_markers.addLayer(features[key]);
     }
-    mymap.addLayer(all_markers);
+    map.addLayer(all_markers);
 }
