@@ -107,7 +107,9 @@ function dele_createMap(token, url) {
         marker.bindPopup(popup);
         features[key].addLayer(marker);
     }
-    var all_markers = new L.MarkerClusterGroup();
+    var all_markers = new L.MarkerClusterGroup({
+        spiderfyDistanceMultiplier: 1.8,
+    });
     for (var key of Object.keys(features)) {
         all_markers.addLayer(features[key]);
     }
