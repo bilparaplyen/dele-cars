@@ -10,10 +10,10 @@
 
 // Add leaflet stylesheet:
 
-// [carmap url="https://app.dele.no/api/search"]
+// [carmap url="https://app.dele.no" key="<mapbox.com api key>"]
 function carmap_func( $atts ) {
   $a = shortcode_atts( array(
-    'url' => "https://app.dele.no/api/search",
+    'url' => "https://app.dele.no",
     'token' => '',
   ), $atts );
   $ts = new DateTimeZone('Europe/Oslo');
@@ -21,21 +21,26 @@ function carmap_func( $atts ) {
   $start = $start->format('Y-m-d\TH:i:s');
   $end = new DateTime("+3 hours", $ts);
   $end = $end->format('Y-m-d\TH:i:s');
-  $fn="{$a[url]}?start=$start&"
+  $url = $a['url'];
+  $fn="{$url}/api/search?start=$start&"
     . "end=$end&location=%7B%22type%22%3A%22Point%22%2C%22"
     . 'coordinates%22%3A%5B5.32055452%2C60.39078164%5D%7D&'
     . 'filters=%7B%22groups%22%3A%5B%5D%2C%22minSeats%22%3A1%2C%22maxSeats'
     . '%22%3A9%2C%22carIds%22%3A%5B%5D%2C%22locationIds%22%3A%5B%5D%7D';
   $json_str=file_get_contents($fn);
   $json = json_decode($json_str);
+  $url = json_encode($a['url']);
+  $token = json_encode($a['token']);
+
   if ($json == NULL) {
     $json_str="false";
   }
   $output = "<script type='text/javascript'>"
-    ."dele_data=$json_str;"
-    ."</script>"
+  ."dele_data=$json_str;"
+  ."dele_url=$url;"
+  ."</script>"
     ."<div id='mapid'></div>"
-    ."<script type='text/javascript'>dele_createMap('{$a[token]}')</script>";
+    ."<script type='text/javascript'>dele_createMap($token, $url)</script>";
 
   if ($json == NULL) {
     $json_str="false";
