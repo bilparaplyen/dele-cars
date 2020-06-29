@@ -18,4 +18,4 @@ dele.zip:
 
 Upload the plugin to your wordpress installation.
 
-![Screenshot](docs/img/screenshot.jpg?raw=true "Screenshot of map view")
+![Screenshot](docs/img/screenshot.png?raw=true "Screenshot of map view")
