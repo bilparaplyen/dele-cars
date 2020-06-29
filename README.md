@@ -17,3 +17,5 @@ dele.zip:
     dele.php
 
 Upload the plugin to your wordpress installation.
+
+![Screenshot](docs/img/screenshot.jpg?raw=true "Screenshot of map view")
