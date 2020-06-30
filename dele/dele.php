@@ -1,7 +1,7 @@
 <?php
 /**
  * Plugin Name: Dele
- * Description: Display map of cars from app.dele.no. Use in page [carmap url="https://app.dele.no/api/search" token="valid jwt token to api.mapbox.com"]
+ * Description: Display map of cars from app.dele.no. Use in page [carmap url="https://app.dele.no" token="valid jwt token to api.mapbox.com"]
  * License:           GPL v2 or later
  * License URI:       https://www.gnu.org/licenses/gpl-2.0.html
 */
