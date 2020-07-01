@@ -1,7 +1,7 @@
 #mapid {
   height: 780px;
   max-height: 100vw;
-  width: 100vw;
+  width: 100%;
   max-width: 1280px;
 }
 .entry-content .leaflet-popup-content h3{
