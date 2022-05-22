@@ -87,11 +87,14 @@ function dele_createMap(token, url) {
         p_content += "<li> Pris pr time Kr "
             + car.hourlyRate.toFixed(2).replace('.',',')
             + "</li>";
-        p_content += "<li> Drivstoff: "
-            + car.carProperties.find(
-                obj => obj.carPropertyGroup == 'Drivstoff'
-            ).carPropertyName
-            + "</li>";
+        if (car.carProperties.find(obj => obj.carPropertyGroup == 'Drivstoff'))
+        {
+            p_content += "<li> Drivstoff: "
+                + car.carProperties.find(
+                    obj => obj.carPropertyGroup == 'Drivstoff'
+                ).carPropertyName
+                + "</li>";
+        }
         if (car.maxAvailability == 100) {
             p_content += "<li><strong> Helt ledig neste tre timer</strong></li>"
         }
