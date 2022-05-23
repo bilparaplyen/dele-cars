@@ -1,7 +1,7 @@
 <?php
 /**
  * Plugin Name: Dele
- * Description: Display map of cars from app.dele.no. Use in page [carmap url="https://app.dele.no" token="valid jwt token to api.mapbox.com"]
+ * Description: Display map of cars from app.dele.no. Use in page [carmap url="https://app.dele.no" token="valid jwt token to api.mapbox.com" lat="60.39078164" lon="5.32055452" zoom="11"]
  * License:           GPL v2 or later
  * License URI:       https://www.gnu.org/licenses/gpl-2.0.html
 */
@@ -15,6 +15,9 @@ function carmap_func( $atts ) {
   $a = shortcode_atts( array(
     'url' => "https://app.dele.no",
     'token' => '',
+    'lat' => '60.39078164',
+    'lon' => '5.32055452',
+    'zoom' => '11',
   ), $atts );
   $ts = new DateTimeZone('Europe/Oslo');
   $start = new DateTime("now", $ts);
@@ -38,6 +41,9 @@ function carmap_func( $atts ) {
   $output = "<script type='text/javascript'>"
   ."dele_data=$json_str;"
   ."dele_url=$url;"
+  ."dele_lat={$a['lat']};"
+  ."dele_lon={$a['lon']};"
+  ."dele_zoom={$a['zoom']};"
   ."</script>"
     ."<div id='mapid'></div>"
     ."<script type='text/javascript'>dele_createMap($token, $url)</script>";

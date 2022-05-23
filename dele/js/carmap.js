@@ -13,8 +13,8 @@ function dele_createMap(token, url) {
     var map = L.map('mapid', {
         dragging: !L.Browser.mobile,
         tap: !L.Browser.mobile,
-        zoom: 11,
-        center: [60.39078164, 5.32055452],
+        zoom: dele_zoom,
+        center: [dele_lat, dele_lon],
     });
 
     L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}', {
